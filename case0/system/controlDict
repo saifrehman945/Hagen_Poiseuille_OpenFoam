@@ -51,156 +51,226 @@ functions
 
 ///////////////////////////////////////////////////////////////////////////
 
-minmaxdomain
-{
-    type fieldMinMax;
+    #includeFunc cellMax
+        (
+            name=maxdomain,
+            p,
+            U
+        )
 
-    functionObjectLibs ("libfieldFunctionObjects.so");
+    #includeFunc cellMin
+        (
+            name=mindomain,
+            p,
+            U
+        )
+    #includeFunc patchFlowRate
+        (
+            name=inMassFlow,
+            patch=inlet,
+            phi
+        )
+    #includeFunc patchFlowRate
+        (
+            name=outMassFlow,
+            patch=outlet,
+            phi
+        )
+    #includeFunc patchFlowRate
+        (
+            name=inPre,
+            patch=inlet,
+            operation=average,
+            phi,
+            U,
+            p
+        )
+    
+        // Sampling along line s1
+    s1
+    {
+        type            sets;
+        functionObjectLibs ("libsampling.so");
+        enabled         true;
+        outputControl   timeStep;
+        outputInterval  1;
+        setFormat       raw;
+        interpolationScheme cell;
+        fields
+        (
+            U
+            p
+        );
+        sets
+        (
+            s1
+            {
+                type    lineCell;
+                axis    x;
+                start   (0 0 0);
+                end     (10 0 0);
+            }
+        );
+    }
 
-    enabled true; //true or false
-
-    mode component;
-
-    writeControl timeStep;
-    writeInterval 1;
-
-    log true;
-
-    fields (p U);
-}
-
+    // Sampling along line s2
+    s2
+    {
+        type            sets;
+        functionObjectLibs ("libsampling.so");
+        enabled         true;
+        outputControl   timeStep;
+        outputInterval  1;
+        setFormat       raw;
+        interpolationScheme cell;
+        fields
+        (
+            U
+            p
+        );
+        sets
+        (
+            s2
+            {
+                type    lineCell;
+                axis    y;
+                start   (9 -1 0);
+                end     (9 1 0);
+            }
+        );
+    }
 ///////////////////////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////////////////////
-inMassFlow
-{
-    type            surfaceFieldValue;
-    functionObjectLibs ("libfieldFunctionObjects.so");
-    enabled         true;
+// inMassFlow
+// {
+//     type            surfaceFieldValue;
+//     functionObjectLibs ("libfieldFunctionObjects.so");
+//     enabled         true;
 
-    //writeControl     outputTime;
-    writeControl   timeStep;
-    writeInterval  1;
+//     //writeControl     outputTime;
+//     writeControl   timeStep;
+//     writeInterval  1;
 
-    log             true;
+//     log             true;
 
-    writeFields     false;
+//     writeFields     false;
 
-    regionType          patch;
-    name      inlet;
+//     regionType          patch;
+//     name      inlet;
 
-    operation       sum;
+//     operation       sum;
 
-    fields
-    (
-        phi
-    );
-}
-///////////////////////////////////////////////////////////////////////////
+//     fields
+//     (
+//         phi
+//     );
+// }
+// ///////////////////////////////////////////////////////////////////////////
 
-///////////////////////////////////////////////////////////////////////////
-outMassFlow
-{
-    type            surfaceFieldValue;
-    functionObjectLibs ("libfieldFunctionObjects.so");
-    enabled         true;
+// ///////////////////////////////////////////////////////////////////////////
+// outMassFlow
+// {
+//     type            surfaceFieldValue;
+//     functionObjectLibs ("libfieldFunctionObjects.so");
+//     enabled         true;
 
-    //writeControl     outputTime;
-    writeControl   timeStep;
-    writeInterval  1;
+//     //writeControl     outputTime;
+//     writeControl   timeStep;
+//     writeInterval  1;
 
-    log             true;
+//     log             true;
 
-    writeFields     false;
+//     writeFields     false;
 
-    regionType          patch;
-    name      outlet;
+//     regionType          patch;
+//     name      outlet;
 
-    operation       sum;
+//     operation       sum;
 
-    fields
-    (
-        phi
-    );
-}
-///////////////////////////////////////////////////////////////////////////
+//     fields
+//     (
+//         phi
+//     );
+// }
+// ///////////////////////////////////////////////////////////////////////////
 
-///////////////////////////////////////////////////////////////////////////
+// ///////////////////////////////////////////////////////////////////////////
 
-inPre
-{
-    type            surfaceFieldValue;
-    functionObjectLibs ("libfieldFunctionObjects.so");
-    enabled         true;
+// inPre
+// {
+//     type            surfaceFieldValue;
+//     functionObjectLibs ("libfieldFunctionObjects.so");
+//     enabled         true;
 
-    //writeControl     outputTime;
-    writeControl   timeStep;
-    writeInterval  1;
+//     //writeControl     outputTime;
+//     writeControl   timeStep;
+//     writeInterval  1;
 
-    log             true;
+//     log             true;
 
-    writeFields     false;
+//     writeFields     false;
 
-    regionType          patch;
-    name      inlet;
+//     regionType          patch;
+//     name      inlet;
 
-    operation       weightedAverage;
+//     operation       weightedAverage;
 
-    fields
-    (
-        phi
-        U
-	p
-    );
-}
+//     fields
+//     (
+//         phi
+//         U
+// 	p
+//     );
+// }
 
-/*
-CoV
-areaAverage
-areaIntegrate
-areaNormalAverage
-areaNormalIntegrate
-average
-max
-min
-none
-sum
-sumDirection
-sumDirectionBalance
-sumMag
-weightedAreaAverage
-weightedAverage
-*/
+// /*
+// CoV
+// areaAverage
+// areaIntegrate
+// areaNormalAverage
+// areaNormalIntegrate
+// average
+// max
+// min
+// none
+// sum
+// sumDirection
+// sumDirectionBalance
+// sumMag
+// weightedAreaAverage
+// weightedAverage
+// */
 
-///////////////////////////////////////////////////////////////////////////
+// ///////////////////////////////////////////////////////////////////////////
 
-///////////////////////////////////////////////////////////////////////////
+// ///////////////////////////////////////////////////////////////////////////
 
-outMax
-{
-    type            surfaceFieldValue;
-    functionObjectLibs ("libfieldFunctionObjects.so");
-    enabled         true;
+// outMax
+// {
+//     type            surfaceFieldValue;
+//     functionObjectLibs ("libfieldFunctionObjects.so");
+//     enabled         true;
 
-    //writeControl     outputTime;
-    writeControl   timeStep;
-    writeInterval  1;
+//     //writeControl     outputTime;
+//     writeControl   timeStep;
+//     writeInterval  1;
 
-    log             true;
+//     log             true;
 
-    writeFields     false;
+//     writeFields     false;
 
-    regionType          patch;
-    name      outlet;
+//     regionType          patch;
+//     name      outlet;
 
-    operation       max;
+//     operation       max;
 
-    fields
-    (
-        U
-	p
-    );
-}
+//     fields
+//     (
+//         U
+// 	p
+//     );
+// }
 
 ///////////////////////////////////////////////////////////////////////////
 
