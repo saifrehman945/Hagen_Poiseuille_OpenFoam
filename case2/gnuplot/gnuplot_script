@@ -22,8 +22,11 @@ set grid
 
 
 plot [][] \
- './postProcessing/sampleDict/108/s2_U.xy' u 1:2 w lp lt 1 lc rgb 'blue' pt 7 title 'Numerical solution', \
+ './postProcessing/s2/108/s2.xy' u 1:2 w lp lt 1 lc rgb 'blue' pt 7 title 'Numerical solution', \
   1.4677976*(1-x**2/0.5**2) lc rgb 'red' title 'Analytical solution'
+
+# plot [][] \
+#  './postProcessing/s1/108/s1.xy' u 1:5 with lines title 'Delta P', \
 
 pause -1
 

@@ -22,8 +22,13 @@ set grid
 
 
 plot [][] \
- './postProcessing/sampleDict/20/s2_U.xy' u 1:2 w lp lt 1 lc rgb 'blue' pt 7 title 'Numerical solution', \
+ './postProcessing/s2/20/s2.xy' u 1:2 w lp lt 1 lc rgb 'blue' pt 7 title 'Numerical solution Bad Mesh', \
+ '../case0/postProcessing/s2/20/s2.xy' u 1:2 w lp lt 1 lc rgb 'green' pt 7 title 'Numerical solution Good Mesh', \
   1.468*(1-x**2/0.5**2) lc rgb 'red' title 'Analytical solution'
+
+# plot [][] \
+#  './postProcessing/s1/20/s1.xy' u 1:5 with lines title 'Delta P bad Mesh', \
+#  '../case0/postProcessing/s1/20/s1.xy' u 1:5 with lines title 'Delta P Good Mesh', \
 
 pause -1
 

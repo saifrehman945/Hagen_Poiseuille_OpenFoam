@@ -23,13 +23,6 @@ checkMesh
 icoFoam > log.icofoam | tail -f log.icofoam
 
 
-
-#To do some sampling
-
-postProcess -func sampleDict -latestTime 
-
-
-
 # Visualization
 
 paraFoam

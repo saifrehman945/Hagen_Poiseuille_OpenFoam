@@ -26,9 +26,8 @@ icoFoam | tee log
 
 
 
-#To do some sampling
+#To do PostProcessing using Gnuplot
 
-postProcess -func sampleDict -latestTime 
 
 gnuplot gnuplot/gnuplot_script
 

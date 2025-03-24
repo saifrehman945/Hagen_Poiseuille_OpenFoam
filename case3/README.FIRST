@@ -25,11 +25,6 @@ checkMesh
 icoFoam | tee log
 
 
-
-#To do some sampling
-
-postProcess -func sampleDict -latestTime 
-
 gnuplot gnuplot/gnuplot_script
 
 
@@ -44,3 +39,8 @@ paraFoam
 #NOTE0:
 
 #In the file laminar_pipe.ipynb you will find a jupyter notebook (ipython), to plot the analytical vs. the numerical solution.
+
+#NOTE1: 
+
+#blockMeshDict is modifies to get a bad Mesh. If we run checkMesh, it failes the Mesh check. Running the case 
+#and comparing with the good Mesh
